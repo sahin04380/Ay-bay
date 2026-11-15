@@ -1,0 +1,64 @@
+{
+  "entities": {
+    "LedgerEntry": {
+      "title": "LedgerEntry",
+      "description": "A single income or expense transaction in the user's ledger.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Authenticated Firebase user UID who owns this entry."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["in", "out"],
+          "description": "Transaction type: 'in' for income, 'out' for expense."
+        },
+        "amount": {
+          "type": "number",
+          "description": "Positive monetary amount in BDT."
+        },
+        "dateStr": {
+          "type": "string",
+          "description": "Transaction date in ISO YYYY-MM-DD format."
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional note or description of the transaction."
+        },
+        "clientOrder": {
+          "type": "integer",
+          "description": "Epoch millisecond tie-breaker for chronological sorting on the same day."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() at creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() at creation and updates."
+        }
+      },
+      "required": [
+        "userId",
+        "type",
+        "amount",
+        "dateStr",
+        "description",
+        "clientOrder",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/entries/{entryId}": {
+      "schema": {
+        "$ref": "#/entities/LedgerEntry"
+      },
+      "description": "User-scoped income and expense ledger entries."
+    }
+  }
+}

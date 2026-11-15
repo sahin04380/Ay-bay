@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">আয় ব্যয় হিসাব</string>
+
+    <!-- Auth -->
+    <string name="auth_subtitle">আপনার দৈনন্দিন আয়, ব্যয় ও স্টেটমেন্ট নিরাপদ ক্লাউডে সংরক্ষণ করুন</string>
+    <string name="auth_feature_summary">তাৎক্ষণিক আয়-ব্যয় ও ব্যালেন্স হিসাব</string>
+    <string name="auth_feature_statement">তারিখ ও ধরন অনুযায়ী পূর্ণাঙ্গ স্টেটমেন্ট</string>
+    <string name="auth_feature_cloud">যেকোনো ডিভাইসে নিরাপদ ক্লাউড ব্যাকআপ</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_in_bengali_hint">Google অ্যাকাউন্ট দিয়ে চালিয়ে যান</string>
+    <string name="sign_out">সাইন আউট</string>
+    <string name="sign_out_confirm_title">সাইন আউট করবেন?</string>
+    <string name="sign_out_confirm_message">আপনার সব হিসাব ক্লাউডে সংরক্ষিত থাকবে।</string>
+
+    <!-- Navigation & Header -->
+    <string name="tab_new_entry">নতুন এন্ট্রি</string>
+    <string name="tab_edit_entry">এন্ট্রি এডিট</string>
+    <string name="tab_statement">স্টেটমেন্ট</string>
+    <string name="theme_toggle_desc">থিম পরিবর্তন করুন</string>
+    <string name="account_menu_desc">অ্যাকাউন্ট মেনু</string>
+
+    <!-- Summary -->
+    <string name="label_total_income">মোট আয়</string>
+    <string name="label_total_expense">মোট ব্যয়</string>
+    <string name="label_balance">ব্যালেন্স</string>
+    <string name="currency_symbol">৳</string>
+
+    <!-- Entry Form -->
+    <string name="type_income">আয় (+)</string>
+    <string name="type_expense">ব্যয় (−)</string>
+    <string name="label_date">তারিখ</string>
+    <string name="label_amount">টাকা</string>
+    <string name="placeholder_amount">০</string>
+    <string name="label_description">বিবরণ</string>
+    <string name="placeholder_description">যেমন: পণ্য বিক্রি / দোকান ভাড়া</string>
+    <string name="quick_suggestions">দ্রুত বিবরণ</string>
+    <string name="btn_add_entry">যোগ করুন</string>
+    <string name="btn_update_entry">আপডেট করুন</string>
+    <string name="btn_cancel">বাতিল</string>
+    <string name="btn_ok">ঠিক আছে</string>
+    <string name="recent_entries_title">সাম্প্রতিক এন্ট্রি</string>
+    <string name="view_all_statement">সব স্টেটমেন্ট দেখুন</string>
+
+    <!-- Messages & Errors -->
+    <string name="error_invalid_amount_or_date">তারিখ ও সঠিক টাকার পরিমাণ দিন</string>
+    <string name="msg_entry_added">এন্ট্রি যোগ হয়েছে</string>
+    <string name="msg_entry_updated">এন্ট্রি আপডেট হয়েছে</string>
+    <string name="msg_entry_deleted">এন্ট্রি মুছে ফেলা হয়েছে</string>
+    <string name="error_loading_entries">হিসাব লোড করতে সমস্যা হয়েছে</string>
+    <string name="retry">আবার চেষ্টা করুন</string>
+
+    <!-- Statement & Filters -->
+    <string name="filter_start_date">শুরুর তারিখ</string>
+    <string name="filter_end_date">শেষ তারিখ</string>
+    <string name="filter_select_date">তারিখ বাছুন</string>
+    <string name="filter_type">ধরন</string>
+    <string name="filter_all">সব</string>
+    <string name="filter_income">আয়</string>
+    <string name="filter_expense">ব্যয়</string>
+    <string name="filter_search">খুঁজুন</string>
+    <string name="filter_search_placeholder">বিবরণ লিখুন</string>
+    <string name="filter_clear">ফিল্টার মুছুন</string>
+    <string name="empty_entries">কোনো এন্ট্রি নেই</string>
+    <string name="empty_entries_hint">নতুন এন্ট্রি ট্যাব থেকে আপনার প্রথম আয় বা ব্যয় যোগ করুন।</string>
+    <string name="empty_filtered_hint">এই ফিল্টারে কোনো লেনদেন পাওয়া যায়নি।</string>
+    <string name="label_running_balance">ব্যালেন্স</string>
+    <string name="label_filtered_total">মোট (ফিল্টার)</string>
+    <string name="action_edit">এডিট</string>
+    <string name="action_delete">মুছুন</string>
+    <string name="delete_confirm_title">এন্ট্রি মুছুন</string>
+    <string name="delete_confirm_message">এই এন্ট্রি মুছে ফেলবেন?</string>
+</resources>

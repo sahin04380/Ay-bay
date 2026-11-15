@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>আয় ব্যয় হিসাব</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--tx:#1d2330;--mut:#6b7385;--bd:#e1e4ea;--in:#12805c;--out:#c8312f;--bal:#1f55c9;--pri:#1f55c9;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171d;--card:#1e222b;--tx:#eceff4;--mut:#9aa3b5;--bd:#2f3542;--in:#3ec99b;--out:#ff7b79;--bal:#7ea6ff;--pri:#5b8cff}}
+:root[data-theme="dark"]{--bg:#14171d;--card:#1e222b;--tx:#eceff4;--mut:#9aa3b5;--bd:#2f3542;--in:#3ec99b;--out:#ff7b79;--bal:#7ea6ff;--pri:#5b8cff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans Bengali","Hind Siliguri",system-ui,sans-serif;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:6px 0 12px;text-align:center}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:12px}
+.sum{display:flex;gap:6px;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;white-space:nowrap;overflow-x:auto}
+.sum span{display:flex;flex-direction:column;align-items:center;flex:1;min-width:0}
+.sum small{font-weight:400;color:var(--mut);font-size:12px}
+.in{color:var(--in)}.out{color:var(--out)}.bal{color:var(--bal)}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tabs button{flex:1;padding:9px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;font:inherit;cursor:pointer}
+.tabs button.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
+input,select{width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+.row{display:flex;gap:8px}.row>div{flex:1}
+.types{display:flex;gap:8px}
+.types label{flex:1;margin:0;padding:10px;text-align:center;border:1px solid var(--bd);border-radius:8px;cursor:pointer;color:var(--tx)}
+.types input{display:none}
+.types label.a:has(input:checked){background:var(--in);color:#fff;font-weight:700}
+.types label.b:has(input:checked){background:var(--out);color:#fff;font-weight:700}
+.btn{width:100%;margin-top:12px;padding:11px;border:0;border-radius:10px;background:var(--pri);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.btn.g{background:var(--bd);color:var(--tx)}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--bd);text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:600}
+td.n,th.n{text-align:right;white-space:nowrap}
+.act button{border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:6px;padding:3px 8px;font:inherit;font-size:12px;cursor:pointer;margin-left:3px}
+.empty{text-align:center;color:var(--mut);padding:20px}
+.hide{display:none}
+.msg{font-size:13px;color:var(--mut);text-align:center;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>আয় ব্যয় হিসাব</h1>
+
+<div class="card sum" id="sum"></div>
+
+<div class="tabs">
+<button id="t1" class="on" onclick="tab(1)">নতুন এন্ট্রি</button>
+<button id="t2" onclick="tab(2)">স্টেটমেন্ট</button>
+</div>
+
+<div id="p1" class="card">
+<div class="types">
+<label class="a"><input type="radio" name="ty" value="in" checked><span>আয় (+)</span></label>
+<label class="b"><input type="radio" name="ty" value="out"><span>ব্যয় (−)</span></label>
+</div>
+<div class="row">
+<div><label>তারিখ</label><input type="date" id="dt"></div>
+<div><label>টাকা</label><input type="number" id="am" min="0" step="any" inputmode="decimal" placeholder="০"></div>
+</div>
+<label>বিবরণ</label>
+<input type="text" id="ds" placeholder="যেমন: পণ্য বিক্রি / দোকান ভাড়া">
+<button class="btn" id="save" onclick="save()">যোগ করুন</button>
+<button class="btn g hide" id="cancel" onclick="resetForm()" style="margin-top:8px">বাতিল</button>
+<div class="msg" id="msg"></div>
+</div>
+
+<div id="p2" class="card hide">
+<div class="row">
+<div><label>শুরুর তারিখ</label><input type="date" id="f1" onchange="render()"></div>
+<div><label>শেষ তারিখ</label><input type="date" id="f2" onchange="render()"></div>
+</div>
+<div class="row">
+<div><label>ধরন</label><select id="f3" onchange="render()"><option value="">সব</option><option value="in">আয়</option><option value="out">ব্যয়</option></select></div>
+<div><label>খুঁজুন</label><input type="text" id="f4" oninput="render()" placeholder="বিবরণ"></div>
+</div>
+<div class="tbl" style="margin-top:10px">
+<table>
+<thead><tr><th>তারিখ</th><th>বিবরণ</th><th class="n">আয়</th><th class="n">ব্যয়</th><th class="n">ব্যালেন্স</th><th></th></tr></thead>
+<tbody id="tb"></tbody>
+<tfoot id="tf"></tfoot>
+</table>
+</div>
+</div>
+</div>
+
+<script>
+var KEY="hisab_v1",data=[],editId=null;
+function load(){try{data=JSON.parse(localStorage.getItem(KEY)||"[]")||[]}catch(e){data=[]}}
+function store(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}}
+function bn(n){return Number(n).toLocaleString("bn-BD",{maximumFractionDigits:2})}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function bd(s){var p=s.split("-");if(p.length!=3)return s;var g=function(x){return String(x).replace(/\d/g,function(d){return "০১২৩৪৫৬৭৮৯"[d]})};return g(p[2])+"/"+g(p[1])+"/"+g(p[0])}
+function tab(n){document.getElementById("p1").classList.toggle("hide",n!=1);document.getElementById("p2").classList.toggle("hide",n!=2);document.getElementById("t1").className=n==1?"on":"";document.getElementById("t2").className=n==2?"on":"";if(n==2)render()}
+function totals(){var i=0,o=0;data.forEach(function(e){if(e.t=="in")i+=e.a;else o+=e.a});return{i:i,o:o,b:i-o}}
+function summary(){var t=totals();document.getElementById("sum").innerHTML=
+'<span class="in"><small>মোট আয়</small>৳ '+bn(t.i)+'</span><span class="out"><small>মোট ব্যয়</small>৳ '+bn(t.o)+'</span><span class="bal"><small>ব্যালেন্স</small>৳ '+bn(t.b)+'</span>'}
+function resetForm(){editId=null;document.getElementById("am").value="";document.getElementById("ds").value="";document.getElementById("dt").value=today();document.querySelector("input[name=ty][value=in]").checked=true;document.getElementById("save").textContent="যোগ করুন";document.getElementById("cancel").classList.add("hide")}
+function save(){
+var a=parseFloat(document.getElementById("am").value),d=document.getElementById("dt").value,s=document.getElementById("ds").value.trim(),t=document.querySelector("input[name=ty]:checked").value,m=document.getElementById("msg");
+if(!(a>0)||!d){m.textContent="তারিখ ও সঠিক টাকার পরিমাণ দিন";return}
+if(editId){data.forEach(function(e){if(e.id==editId){e.a=a;e.d=d;e.s=s;e.t=t}});m.textContent="এন্ট্রি আপডেট হয়েছে"}
+else{data.push({id:Date.now(),a:a,d:d,s:s,t:t});m.textContent="এন্ট্রি যোগ হয়েছে"}
+store();resetForm();summary();render()}
+function edit(id){
+var e=data.filter(function(x){return x.id==id})[0];if(!e)return;
+editId=id;document.getElementById("am").value=e.a;document.getElementById("ds").value=e.s;document.getElementById("dt").value=e.d;
+document.querySelector("input[name=ty][value="+e.t+"]").checked=true;
+document.getElementById("save").textContent="আপডেট করুন";document.getElementById("cancel").classList.remove("hide");document.getElementById("msg").textContent="";tab(1);window.scrollTo(0,0)}
+function del(id){if(!confirm("এই এন্ট্রি মুছে ফেলবেন?"))return;data=data.filter(function(x){return x.id!=id});store();summary();render()}
+function render(){
+var f1=document.getElementById("f1").value,f2=document.getElementById("f2").value,f3=document.getElementById("f3").value,f4=document.getElementById("f4").value.trim().toLowerCase();
+var all=data.slice().sort(function(a,b){return a.d==b.d?a.id-b.id:(a.d<b.d?-1:1)});
+var run=0,rows=[],ti=0,to=0;
+all.forEach(function(e){run+=e.t=="in"?e.a:-e.a;e.r=run});
+all.forEach(function(e){
+if(f1&&e.d<f1)return;if(f2&&e.d>f2)return;if(f3&&e.t!=f3)return;if(f4&&e.s.toLowerCase().indexOf(f4)<0)return;
+if(e.t=="in")ti+=e.a;else to+=e.a;
+rows.push('<tr><td>'+bd(e.d)+'</td><td>'+esc(e.s||"—")+'</td><td class="n in">'+(e.t=="in"?bn(e.a):"")+'</td><td class="n out">'+(e.t=="out"?bn(e.a):"")+'</td><td class="n bal">'+bn(e.r)+'</td><td class="act n"><button onclick="edit('+e.id+')">এডিট</button><button onclick="del('+e.id+')">মুছুন</button></td></tr>')});
+document.getElementById("tb").innerHTML=rows.length?rows.join(""):'<tr><td colspan="6" class="empty">কোনো এন্ট্রি নেই</td></tr>';
+document.getElementById("tf").innerHTML=rows.length?'<tr><th colspan="2">মোট</th><th class="n in">'+bn(ti)+'</th><th class="n out">'+bn(to)+'</th><th class="n bal">'+bn(ti-to)+'</th><th></th></tr>':""}
+load();document.getElementById("dt").value=today();summary();
+</script>
+</body>
+</html>

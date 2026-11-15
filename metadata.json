@@ -1,0 +1,6 @@
+{
+  "name": "আয় ব্যয় হিসাব",
+  "description": "আয় ও ব্যয়ের হিসাব, স্টেটমেন্ট ও ব্যালেন্স ট্র্যাক করার অ্যান্ড্রয়েড অ্যাপ।",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
